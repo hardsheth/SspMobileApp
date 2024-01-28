@@ -20,13 +20,14 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import InputBoxOtp from './InputBoxOtp';
 import { Controller, useForm } from 'react-hook-form';
+import InputBoxOtp from '../components/InputBoxOtp';
+import { CommonActions } from '@react-navigation/native';
 
 
 
 
-function App({navigation, route}:any) {
+function App({navigation}:any) {
   const isDarkMode = useColorScheme() === 'dark';
   const { control, handleSubmit,setValue, formState, watch } = useForm();
   const [otpnoinput,setOtpnoinput]=useState(['0','0','0','0','0','0' ])
@@ -38,8 +39,6 @@ function App({navigation, route}:any) {
       const OTPNO=numberString.split('');
       setOtpnoinput(OTPNO)
       if(OTPNO.length>5){
-        console.log(`LOok`);
-        
         onSubmit()
       }
     }
@@ -49,14 +48,22 @@ function App({navigation, route}:any) {
   }, [otpno]);
   const onSubmit=()=>{
     console.log( 'data');
+    // navigation.replace('Profile');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: 'Profile' } // Replace 'Otp' with the name of the screen you want to navigate to
+        ],
+      })
+    );
   }
   const updateOtp=()=>{
     otpInputRef.current?.focus();
   }
   return (
-    <View style={styles.loginContainer} >
+    <SafeAreaView style={styles.loginContainer} >
       <Text style={styles.sectionTitle} >Enter Otp</Text>
-      <Text>This is {route.params.name}'s profile</Text>;
       <Controller
         control={control}
         render={({ field }) => (
@@ -89,7 +96,7 @@ function App({navigation, route}:any) {
         <InputBoxOtp value={otpnoinput[4]} sendNo={updateOtp}/>
         <InputBoxOtp value={otpnoinput[5]} sendNo={updateOtp}/>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -98,14 +105,14 @@ const styles = StyleSheet.create({
   loginContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   sectionTitle: {
     fontSize: 28,
     fontWeight: '600',
   },
   sectionInput: {
-    height:1
+    height:1,
   },
   otpDisplay: {
     flexDirection: 'row',
