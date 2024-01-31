@@ -26,10 +26,10 @@ const Home = () => {
 function App(): React.JSX.Element {
   return (
     <NavigationContainer >
-     <Stack.Navigator>
+     <Stack.Navigator initialRouteName='Profile' >
         <Stack.Screen name="Home" component={RegisterContact} />
-        <Stack.Screen name="Otp" component={OtpScreen} />
-        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Otp" component={OtpScreen}  options={{}} />
+        <Stack.Screen name="Profile" component={Profile} options={{  headerShown: false ,}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

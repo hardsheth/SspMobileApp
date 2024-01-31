@@ -1,18 +1,27 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React from 'react'
-import { Text } from 'react-native'
-import Profile from '../screens/Profile';
+import History from '../screens/History';
 import Listproducts from '../screens/Listproducts';
-import HistoryProduct from '../screens/History'
+import Dashboard from '../screens/Dashboard';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon1 from 'react-native-vector-icons/Fontisto';
+// FontAwesome
 const Tab = createBottomTabNavigator();
-function Bottom() {
-    return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={Profile} />
-            <Tab.Screen name="List" component={Listproducts} />
-            <Tab.Screen name="Orders" component={HistoryProduct} />
-        </Tab.Navigator>
-    )
-}
 
-export default Bottom
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Dashboard" component={Dashboard} options={{
+           tabBarIcon: ({ color, size }) => (
+            <Icon1 name="home" color={color} size={size} />
+          ),
+        }} />
+      <Tab.Screen name="Products" component={Listproducts} />
+      <Tab.Screen name="History" component={History} options={{
+           tabBarIcon: ({ color, size }) => (
+            <Icon name="history" color={color} size={size} />
+          ),
+        }} />
+    </Tab.Navigator>
+  );
+}
+export default MyTabs

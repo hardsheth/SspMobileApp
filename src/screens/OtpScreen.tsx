@@ -1,64 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Pressable,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
-  useColorScheme,
   View,
 } from 'react-native';
-
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 import { Controller, useForm } from 'react-hook-form';
 import InputBoxOtp from '../components/InputBoxOtp';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, StackActions } from '@react-navigation/native';
 
 
-
-
-function App({navigation}:any) {
-  const isDarkMode = useColorScheme() === 'dark';
-  const { control, handleSubmit,setValue, formState, watch } = useForm();
-  const [otpnoinput,setOtpnoinput]=useState(['0','0','0','0','0','0' ])
+function App({ navigation }: any) {
+  const { control, handleSubmit, setValue, formState: { errors }, watch } = useForm();
+  const [otpnoinput, setOtpnoinput] = useState(['0', '0', '0', '0', '0', '0'])
   const otpno = watch('otp')
-  const otpInputRef:any = useRef(null);
+  const otpInputRef: any = useRef(null);
   useEffect(() => {
-    if(otpno){
+    if (otpno) {
       const numberString = otpno.toString();
-      const OTPNO=numberString.split('');
+      const OTPNO = numberString.split('');
       setOtpnoinput(OTPNO)
-      if(OTPNO.length>5){
-        onSubmit()
-      }
+      console.log(OTPNO, 'otpno');
     }
-    else{
+    else {
       setOtpnoinput([])
     }
   }, [otpno]);
-  const onSubmit=()=>{
-    console.log( 'data');
-    // navigation.replace('Profile');
+  const onSubmit = () => {
+    console.log('data');
+    console.log('Clear1');
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
         routes: [
           { name: 'Profile' } // Replace 'Otp' with the name of the screen you want to navigate to
         ],
-      })
-    );
+      }));
+    // navigation.navigate('Profile')
+    console.log('Clear');
   }
-  const updateOtp=()=>{
+  const updateOtp = () => {
     otpInputRef.current?.focus();
   }
   return (
@@ -89,13 +72,25 @@ function App({navigation}:any) {
         }}
       />
       <View style={styles.otpDisplay}>
-        <InputBoxOtp value={otpnoinput[0]} sendNo={updateOtp}/>
-        <InputBoxOtp value={otpnoinput[1]} sendNo={updateOtp}/>
-        <InputBoxOtp value={otpnoinput[2]} sendNo={updateOtp}/>
-        <InputBoxOtp value={otpnoinput[3]} sendNo={updateOtp}/>
-        <InputBoxOtp value={otpnoinput[4]} sendNo={updateOtp}/>
-        <InputBoxOtp value={otpnoinput[5]} sendNo={updateOtp}/>
+        <InputBoxOtp value={otpnoinput[0]} sendNo={updateOtp} />
+        <InputBoxOtp value={otpnoinput[1]} sendNo={updateOtp} />
+        <InputBoxOtp value={otpnoinput[2]} sendNo={updateOtp} />
+        <InputBoxOtp value={otpnoinput[3]} sendNo={updateOtp} />
+        <InputBoxOtp value={otpnoinput[4]} sendNo={updateOtp} />
+        <InputBoxOtp value={otpnoinput[5]} sendNo={updateOtp} />
       </View>
+      <Pressable
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? 'red' : 'blue',
+          },
+          styles.submitbtn,
+        ]}
+        onPress={handleSubmit(onSubmit)}
+        disabled={errors.contact ? true : false}
+      >
+        <Text >Submit</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -112,12 +107,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   sectionInput: {
-    height:1,
+    height: 1,
   },
   otpDisplay: {
     flexDirection: 'row',
   },
+  submitbtn: {
 
+  }
 });
 
 export default App;
