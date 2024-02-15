@@ -7,6 +7,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OtpScreen from './screens/OtpScreen';
 import RegisterContact from './screens/RegisterContact';
 import Profile from './screens/Profile';
+import {BASE_URL} from "@env"
+import 'react-native-gesture-handler';
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
@@ -24,6 +26,7 @@ const Home = () => {
 }
 
 function App(): React.JSX.Element {
+  console.log(BASE_URL,'basurl')
   return (
     <NavigationContainer >
      <Stack.Navigator initialRouteName='Profile' >
