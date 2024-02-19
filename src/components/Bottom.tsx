@@ -4,6 +4,7 @@ import Listproducts from '../screens/Listproducts';
 import Dashboard from '../screens/Dashboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Fontisto';
+import ProductDetails from '../screens/ProductDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +17,7 @@ function MyTabs() {
           <Icon1 name="home" color={color} size={size} />
         ),
       }} />
-      <Tab.Screen name="Products" component={Listproducts} options={{
+      <Tab.Screen name="Products" component={ProductDetails} options={{
         tabBarIcon: ({ color, size }) => (
           <Icon name="search" color={color} size={size} />
         ),
